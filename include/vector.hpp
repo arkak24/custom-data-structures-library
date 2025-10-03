@@ -19,6 +19,28 @@ namespace custom {
                               data = new T[curr_capacity];
                         };
 
+                        Vector(const T& original_vec){
+                              no_of_current_elements = original_vec.no_of_current_elements;
+                              curr_capacity = original_vec.curr_capacity;
+                              data = new T[curr_capacity];
+                              for(std::size_t i = 0; i < no_of_current_elements; i++){
+                                    data[i] = original_vec.data[i];
+                              }
+                        }
+
+                        Vector& operator=(const Vector& original_vec){
+                              if(this != &original_vec){    // 'this' point to the curent object
+                                    delete[] data;
+                                    no_of_current_elements = original_vec.no_of_current_elements;
+                                    curr_capacity = original_vec.curr_capacity;
+                                    data = new T[curr_capacity];
+                                    for(std::size_t i = 0; i < no_of_current_elements; i++){
+                                          data[i] = original_vec.data[i];
+                                    }
+                              }
+                              return *this;
+                        }
+
                         ~Vector(){
                               delete[] data;
                         };
@@ -68,8 +90,25 @@ namespace custom {
                                     return false;
                               }
                         };
-            };
+                        
+                        // use the iterator like while accessing
+                        // for(auto it : arr.begin(); it != arr.end(); ++it){}
+                        T* begin(){       // returns the address of the first index element
+                              return data;
+                        }
 
+                        T* end(){         // returns the address of the last index element
+                              return (data + no_of_current_elements);
+                        }
+
+                        const T* begin() const{
+                              return data;
+                        }
+
+                        const T* end() const{
+                              return (data + no_of_current_elements);
+                        }
+            };
 }
 
 #endif
